@@ -37,7 +37,7 @@ jobs:
         id: release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm run release -- --ci
+        run: npm run release
 
       - name: Get new version
         id: get_version

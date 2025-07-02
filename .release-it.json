@@ -1,0 +1,21 @@
+{
+  "git": {
+    "tag": true,
+    "commit": true,
+    "push": true,
+    "requireCleanWorkingDir": true,
+    "tagName": "v${version}"
+  },
+  "github": {
+    "release": false
+  },
+  "npm": {
+    "publish": false
+  },
+  "plugins": {
+    "@release-it/conventional-changelog": {
+      "preset": "angular",
+      "infile": "CHANGELOG.md"
+    }
+  }
+}

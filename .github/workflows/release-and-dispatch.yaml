@@ -1,0 +1,53 @@
+name: Release & Dispatch
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write # für Tags
+  actions: write # für repository_dispatch
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Configure Git for release-it
+        run: |
+          git config --local user.name  "${{ github.actor }}"
+          git config --local user.email "${{ github.actor }}@users.noreply.github.com"
+
+      - name: Run release-it
+        id: release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run release -- --ci
+
+      - name: Get new version
+        id: get_version
+        run: |
+          echo "version=$(node -p \"require('./package.json').version\")" >> $GITHUB_OUTPUT
+
+      - name: Dispatch Docker build
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          event-type: docker-build
+          client-payload: |
+            {"version":"${{ steps.get_version.outputs.version }}"}

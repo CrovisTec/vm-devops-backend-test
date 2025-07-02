@@ -1,0 +1,36 @@
+name: Build & Publish Docker
+
+on:
+  repository_dispatch:
+    types: [docker-build]
+
+permissions:
+  contents: read # für Checkout
+  packages: write # für Push in GHCR
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Extract version
+        run: echo "VERSION=${{ github.event.client_payload.version }}" >> $GITHUB_ENV
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Docker image
+        run: |
+          IMAGE=ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:${{ env.VERSION }}
+          docker build -t $IMAGE .
+
+      - name: Push Docker image
+        run: |
+          docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:${{ env.VERSION }}

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/CrovisTec/vm-devops-backend-test/compare/v0.1.1...v0.1.2) (2025-07-02)
+
+
+### Bug Fixes
+
+* fix docker image build wrong repo name ([2599d52](https://github.com/CrovisTec/vm-devops-backend-test/commit/2599d52b2062082c9f62bcef51db8504677ebc9d))
+
 ## [0.1.1](https://github.com/CrovisTec/vm-devops-backend-test/compare/v0.1.0...v0.1.1) (2025-07-02)
 
 

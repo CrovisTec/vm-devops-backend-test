@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/CrovisTec/vm-devops-backend-test/compare/v0.1.0...v0.1.1) (2025-07-02)
+
+
+### Bug Fixes
+
+* fix get new version part wrong run parsing ([970ab87](https://github.com/CrovisTec/vm-devops-backend-test/commit/970ab878c183a8c03b847dd6ceb4b580891f0e11))
+
 # 0.1.0 (2025-07-02)
 
 

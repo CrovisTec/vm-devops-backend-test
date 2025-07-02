@@ -42,7 +42,8 @@ jobs:
       - name: Get new version
         id: get_version
         run: |
-          echo "version=$(node -p \"require('./package.json').version\")" >> $GITHUB_OUTPUT
+          VERSION=$(node -p 'require("./package.json").version')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Dispatch Docker build
         uses: peter-evans/repository-dispatch@v2
